@@ -9,17 +9,13 @@ df = pd.read_csv('VirusSample.csv')
 
 print(df['class'].value_counts())
 
+for i in range(len(df)):
+    if df['class'][i] == 'Downloader' or df['class'][i] == 'Spyware' or df['class'][i] == 'Ransomware' or df['class'][i] == 'Riskware' or df['class'][i] == 'Dropper' or df['class'][i] == 'Crypt' or df['class'][i] == 'Keylogger' or df['class'][i] == 'Adware' or df['class'][i] == 'Agent':
+        df['class'][i] = 'Other'
+    
+print(df['class'].value_counts())
+
 tNames = df['class'].unique().tolist()
-
-
-
-def generate_N_grams(text,ngram=1):
-    words=[word for word in text.split(",")]  
-    #print("Sentence after removing stopwords:",words)
-    temp=zip(*[words[i:] for i in range(ngram)])
-    ans=[' '.join(ngram) for ngram in temp]
-    return ans
-
 
 #Minusculas
 df['api'] = df['api'].str.lower()
@@ -27,7 +23,7 @@ print(len(df))
 
 #Creando n-gramas
 
-cv = CountVectorizer(ngram_range=(2,2))
+cv = CountVectorizer(ngram_range=(3,3))
 
 ngrams = cv.fit_transform(df['api'])
 
